@@ -2,7 +2,7 @@ import { useState } from 'react'
 
 import '../styles/tasklist.scss'
 
-import { FiTrash, FiCheckSquare } from 'react-icons/fi'
+import { FiTrash, FiCheckSquare, FiLifeBuoy } from 'react-icons/fi'
 
 interface Task {
   id: number;
@@ -46,11 +46,11 @@ export function TaskList() {
 
   }
 
+  const completed = tasks.filter(task => task.isComplete).length
+
   return (
     <section className="task-list container">
       <header>
-        <h2>Minhas tasks</h2>
-
         <div className="input-group">
           <input 
             type="text" 
@@ -59,10 +59,15 @@ export function TaskList() {
             value={newTaskTitle}
           />
           <button type="submit" data-testid="add-task-button" onClick={handleCreateNewTask}>
-            <FiCheckSquare size={16} color="#fff"/>
+           Criar <FiCheckSquare size={20} color="#fff"/>
           </button>
         </div>
       </header>
+
+      <div className="taskCounter">
+            <div className="countTasks"> Tarefas Criadas: {tasks.length}</div>
+            <div className="completedTasks"> Concluídas: {completed} de {tasks.length}</div>
+      </div>
 
       <main>
         <ul>
@@ -79,6 +84,7 @@ export function TaskList() {
                   <span className="checkmark"></span>
                 </label>
                 <p>{task.title}</p>
+                {/* <p> {tasks.length}</p> */}
               </div>
 
               <button type="button" data-testid="remove-task-button" onClick={() => handleRemoveTask(task.id)}>
